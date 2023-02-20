@@ -1,0 +1,16 @@
+1.https://docs.flutter.dev/get-started/install/windows
+
+for error  Android Studio
+
+flutter config --android-studio-dir="C:\Program Files\Android\Android Studio"
+
+
+for error:
+Flutter.io Android License Status Unknown
+https://stackoverflow.com/questions/49758849/flutter-io-android-license-status-unknown
+
+2.write your code in : main.dart in lib folder
+
+
+3.Build first app
+https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0
