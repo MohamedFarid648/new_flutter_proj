@@ -38,7 +38,8 @@ class UserService {
     var body = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      Navigator.of(context).pushNamedAndRemoveUntil("/home", (route) => false);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("/patients", (route) => false);
     }
     return body['message'];
   }

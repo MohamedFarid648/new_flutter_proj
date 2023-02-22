@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:try_second_one/views/home_view.dart';
 import 'package:try_second_one/views/login_view.dart';
+import 'package:try_second_one/views/patients_view.dart';
 
 import 'views/register_view.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       home: const LoginView(),
       routes: {
         '/home': (context) => const HomeScreen(),
+        '/patients': (context) => const PatientsView(),
         '/register': (context) => const RegisterView(),
         '/login': (context) => const LoginView(),
       },
