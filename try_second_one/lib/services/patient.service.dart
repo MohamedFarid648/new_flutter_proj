@@ -6,6 +6,7 @@ import '../helpers/constants.dart';
 
 import 'dart:convert';
 
+import '../models/api_response.dart';
 import '../models/patient.dart';
 
 class PatientService {
@@ -19,18 +20,12 @@ class PatientService {
         Uri.parse(ApiConstants.baseUrl + ApiConstants.patientsEndpoint)
             .replace(queryParameters: queryParameters));
 
-    //  print(response.body);
-    var body = jsonDecode(response.body);
-    print(body['data']);
+    //var body = jsonDecode(response.body);
+    var body = ApiResponse.fromJson(jsonDecode(response.body));
 
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return patientFromJson(jsonEncode(
-          body['data'])); //Patient.fromJson(jsonDecode(response.body));
+      return patientFromJson(jsonEncode(body.data));
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
       throw Exception('Failed to load patients');
     }
   }

@@ -40,7 +40,6 @@ class UserService {
     );
 
     var body = ApiResponse.fromJson(jsonDecode(response.body));
-    print(body);
     return body;
   }
 }

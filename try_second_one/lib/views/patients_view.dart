@@ -29,6 +29,7 @@ class _PatientsViewState extends State<PatientsView> {
 
   @override
   Widget build(BuildContext context) {
+    const IconData person = IconData(0xe491, fontFamily: 'MaterialIcons');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Patients'),
@@ -43,14 +44,19 @@ class _PatientsViewState extends State<PatientsView> {
                 return Card(
                   child: Column(
                     children: [
-                      Row(
+                      ListTile(
+                        leading: const Icon(person),
+                        title: Text(_patientModel![index].fullName),
+                        onTap: () => {print(_patientModel![index].email)},
+                      ),
+                      /*Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(_patientModel![index].id.toString()),
                           Text(_patientModel![index].fullName),
                         ],
-                      ),
-                      const SizedBox(
+                      ),*/
+                      /* const SizedBox(
                         height: 20.0,
                       ),
                       Row(
@@ -59,7 +65,7 @@ class _PatientsViewState extends State<PatientsView> {
                           Text(_patientModel![index].email),
                           Text(_patientModel![index].doctorId),
                         ],
-                      ),
+                      ),*/
                     ],
                   ),
                 );
