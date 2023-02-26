@@ -1,12 +1,12 @@
 class ApiResponse {
-  bool? status;
-  int? code;
-  String? message;
-  String? type;
-  Object? data;
-  List<Object>? errors;
+  final bool? status;
+  final int? code;
+  final String? message;
+  final String? type;
+  final Object? data;
+  final List<Object>? errors;
 
-  ApiResponse(
+  const ApiResponse(
       {this.status,
       this.code,
       this.message,
@@ -14,7 +14,18 @@ class ApiResponse {
       this.data,
       this.errors});
 
-  Map<String, dynamic> _toMap() {
+  factory ApiResponse.fromJson(Map<String, dynamic> json) {
+    return ApiResponse(
+      status: json['status'],
+      code: json['code'],
+      message: json['message'],
+      type: json['type'],
+      data: json['data'],
+      errors: json['errors'],
+    );
+  }
+
+  /*Map<String, dynamic> _toMap() {
     return {
       'status': status,
       'code': code,
@@ -31,5 +42,5 @@ class ApiResponse {
       return _mapRep[propertyName];
     }
     throw ArgumentError('propery not found');
-  }
+  }*/
 }

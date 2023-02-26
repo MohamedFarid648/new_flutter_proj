@@ -10,6 +10,10 @@ import '../models/user_model.dart';
 import 'dart:convert';
 
 class UserService {
+  /*
+  Future is a core Dart class for working with asynchronous operations. A Future object represents a potential value or error that will be available at some time in the future.
+
+   */
   Future<Object> createUser(User user) async {
     final response = await http.post(
       Uri.parse(ApiConstants.baseUrl + ApiConstants.registerEndpoint),
@@ -25,7 +29,7 @@ class UserService {
     return body['message'];
   }
 
-  Future<Object> loginUser(UserLogin user, BuildContext context) async {
+  Future<ApiResponse> loginUser(UserLogin user) async {
     print(jsonEncode(user));
     final response = await http.post(
       Uri.parse(ApiConstants.baseUrl + ApiConstants.loginEndpoint),
@@ -35,12 +39,8 @@ class UserService {
       body: jsonEncode(user),
     );
 
-    var body = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("/patients", (route) => false);
-    }
-    return body['message'];
+    var body = ApiResponse.fromJson(jsonDecode(response.body));
+    print(body);
+    return body;
   }
 }
