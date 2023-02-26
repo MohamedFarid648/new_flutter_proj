@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:try_second_one/models/api_response.dart';
 
 import '../helpers/alert.dart';
 import '../models/user_login.dart';
 import '../models/user_model.dart';
 import '../services/user.service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+//https://pub.dev/packages/flutter_secure_storage
 
 //1.Write (stl) to create Stateless Widget
 //class LoginView extends StatelessWidget { Make it statefull becuase of textfield controller
@@ -46,95 +49,7 @@ class _LoginViewState extends State<LoginView> {
 
   /*
   //Good Example: https://docs.flutter.dev/cookbook/networking/fetch-data
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Create Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Create Data Example'),
-        ),
-        body: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(8.0),
-          child:
-              (_futureUserLogin == null) ? buildColumn() : buildFutureBuilder(),
-        ),
-      ),
-    );
-  }
-
-  Column buildColumn() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        TextField(
-          controller: _email,
-          enableSuggestions: true,
-          autocorrect: true,
-          keyboardType: TextInputType.emailAddress,
-          //5.Add place holder
-          decoration:
-              const InputDecoration(hintText: "Enter your email address"),
-        ),
-        TextField(
-          obscureText: true, //make it dotted not text
-          enableSuggestions: false,
-          autocorrect: false,
-          controller: _password,
-          decoration: const InputDecoration(hintText: "Enter your Password"),
-        ),
-        TextButton(
-          child: const Text("Login"),
-          onPressed: () {
-            UserLogin user =
-                UserLogin(emailAddress: _email.text, password: _password.text);
-            setState(() {
-              _futureUserLogin = UserService().loginUser(user);
-            });
-          },
-        ),
-        TextButton(
-            child: const Text("Are you new? Create an Account"),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/register", (route) => false);
-            }),
-      ],
-    );
-  }
-
-To display the data on screen, use the FutureBuilder widget. The FutureBuilder widget comes with Flutter and makes it easy to work with asynchronous data sources.
-
-You must provide two parameters:
-
-* The Future you want to work with. In this case, the future returned from the fetchAlbum() function.
-* A builder function that tells Flutter what to render, depending on the state of the Future: loading, success, or error.
-Note that snapshot.hasData only returns true when the snapshot contains a non-null data value.
-
-Because fetchAlbum can only return non-null values, the function should throw an exception even in the case of a “404 Not Found” server response. Throwing an exception sets the snapshot.hasError to true which can be used to display an error message.
-
-Otherwise, the spinner will be displayed.
-
-  FutureBuilder<ApiResponse> buildFutureBuilder() {
-    return FutureBuilder<ApiResponse>(
-      future: _futureUserLogin,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          // AlertController().showAlertDialog( context, "Login Message", snapshot.data!.message.toString());
-          //Navigator.of(context) .pushNamedAndRemoveUntil("/patients", (route) => false);
-          return Text(snapshot.data!.message.toString());
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        return const CircularProgressIndicator();
-      },
-    );
-  }
+  Use Future Builder
 */
 
   @override
@@ -187,6 +102,7 @@ Otherwise, the spinner will be displayed.
           TextButton(
             child: const Text("Login"),
             onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
               try {
                 UserLogin user = UserLogin(
                     emailAddress: _email.text, password: _password.text);
@@ -195,6 +111,16 @@ Otherwise, the spinner will be displayed.
                   AlertController().showAlertDialog(
                       context, "Login Message", value.message.toString());
                   if (value.status == true) {
+                    // Create storage
+                    /* const storage = FlutterSecureStorage();
+                    storage.write(key: 'user_token', value: value.token);
+                    storage.write(key: 'userId', value: value.userId);*/
+                    // obtain shared preferences
+
+                    // set value
+                    prefs.setString('user_token', value.token.toString());
+                    prefs.setString('userId', value.userId.toString());
+
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil("/patients", (route) => false);
                   }

@@ -5,14 +5,19 @@ class ApiResponse {
   final String? type;
   final Object? data;
   final List<Object>? errors;
+  final String? token;
+  final String? userId;
 
-  const ApiResponse(
-      {this.status,
-      this.code,
-      this.message,
-      this.type,
-      this.data,
-      this.errors});
+  const ApiResponse({
+    this.status,
+    this.code,
+    this.message,
+    this.type,
+    this.data,
+    this.errors,
+    this.token,
+    this.userId,
+  });
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     return ApiResponse(
@@ -22,6 +27,8 @@ class ApiResponse {
       type: json['type'],
       data: json['data'],
       errors: json['errors'],
+      token: json['token'],
+      userId: json['userId'],
     );
   }
 
@@ -33,6 +40,9 @@ class ApiResponse {
       'type': type,
       'data': data,
       'errors': errors,
+      'token': 'token',
+      'userId': 'userId',
+
     };
   }
 
